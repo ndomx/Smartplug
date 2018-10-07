@@ -3,10 +3,17 @@
 
 #include "private-data.h"
 
-#define RELAY_PIN D5
+#define RELAY_PIN D1
+#define LED_RED D6
+#define LED_GREEN D7
+#define LED_BLUE D8
+
+String clientId = "ESP8266-light1"; // Be sure to change it for each device
 
 WiFiClient espClient;
 PubSubClient client(espClient);
+
+bool blue_state = LOW;
 
 void setup_wifi()
 {
@@ -22,7 +29,13 @@ void setup_wifi()
     {
         delay(500);
         Serial.print(".");
+
+        digitalWrite(LED_BLUE, blue_state);
+        blue_state ^= HIGH;
     }
+
+    blue_state = LOW;
+    digitalWrite(LED_BLUE, LOW);
 
     randomSeed(micros());
 
@@ -41,21 +54,19 @@ void on_message(char *topic, byte *payload, unsigned int length)
         Serial.print((char)payload[i]);
     }
     Serial.println();
-
-    bool new_state = (char)payload[0] == '1';
     
-    digitalWrite(RELAY_PIN, new_state);
-    digitalWrite(LED_BUILTIN, new_state);
+    digitalWrite(RELAY_PIN, payload[0] == '1');
+
+    blink_led();
 }
 
 void reconnect()
 {
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_GREEN, HIGH);
     while (!client.connected())
     {
         Serial.print("Attempting MQTT connection...");
-        
-        String clientId = "ESP8266Client-";
-        clientId += String(random(0xffff), HEX);
         
         if (client.connect(clientId.c_str()))
         {
@@ -69,12 +80,28 @@ void reconnect()
             Serial.println(" try again in 5 seconds");
             delay(5000);
         }
+
+        blue_state ^= HIGH;
+        digitalWrite(LED_BLUE, blue_state);
     }
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_GREEN, HIGH);
+    digitalWrite(LED_BLUE, LOW);
+}
+
+void blink_led()
+{
+    digitalWrite(LED_BLUE, LOW);
+    delay(300);
+    digitalWrite(LED_BLUE, HIGH);
+    delay(300);
+    digitalWrite(LED_BLUE, LOW);
+    delay(300);
+    digitalWrite(LED_BLUE, HIGH);
 }
 
 void setup()
 {
-    pinMode(LED_BUILTIN, OUTPUT);
     pinMode(RELAY_PIN, OUTPUT);
 
     Serial.begin(115200);
@@ -82,7 +109,6 @@ void setup()
     client.setServer(mqtt_server, 1883);
     client.setCallback(on_message);
 
-    digitalWrite(LED_BUILTIN, LOW);
     digitalWrite(RELAY_PIN, LOW);
 
     client.subscribe(topic);
