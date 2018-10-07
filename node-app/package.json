@@ -1,0 +1,17 @@
+{
+  "name": "smartplug",
+  "version": "1.0.0",
+  "description": "A simple app to communicate with end devices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ndomx",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mosca": "^2.8.3",
+    "mqtt": "^2.18.8"
+  }
+}
