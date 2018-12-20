@@ -5,7 +5,7 @@
 #include "smartplug-functions.h"
 
 #define RELAY_PIN D1
-#define LED_RED D6 // For MQTT debugging
+#define LED_RED D7 // For MQTT debugging
 #define LED_BLUE D8 // For WiFi debugging
 
 String clientId = "ESP8266-sp1"; // Be sure to change it for each device
