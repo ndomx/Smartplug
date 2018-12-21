@@ -10,8 +10,6 @@ The current version of the prototype is about 6mm x 8mm, it has a fuse socket, a
 
 I decided to use MQTT protocol mainly because of its simplicity and because it's very lightweight. **Note: MQTT communication requires of a central node, called broker. This tutorial doesn't (yet) implements such node.** If you want to test your MQTT communication, you can download the mosquitto client [here](https://mosquitto.org/download/) (some linux distributions may already have it installed), and publish/subscribe to an example server like ``iot.eclipse.org``.
 
-If you're interested in how this project works, please read the [tutorial document](./TUTORIAL.md).
-
 ## External libraries list
 To compile the codes, or open the Eagle schematic, you'll need to download the following libraries. You can check [this document](./LIBRARIES_GUIDE.md) for a step-by-step guide on how to download and install them.
 
