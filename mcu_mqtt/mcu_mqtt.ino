@@ -1,3 +1,13 @@
+/*
+ * Smartplug controller code for ESP8266.
+ * Author: ndomx (https://github.com/ndomx)
+ * 
+ * This code uses the PubSubClient library and
+ * is based on the example code provided the author.
+ * Original code available on:
+ * https://github.com/knolleary/pubsubclient/blob/master/examples/mqtt_esp8266/mqtt_esp8266.ino
+ */
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
