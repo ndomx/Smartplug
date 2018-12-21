@@ -17,6 +17,9 @@ void setup()
 {
     pinMode(RELAY_PIN, OUTPUT);
 
+    pinMode(LED_RED, OUTPUT);
+    pinMode(LED_BLUE, OUTPUT);
+
     Serial.begin(115200);
     setup_wifi();
     client.setServer(mqtt_server, 1883);
