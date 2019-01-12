@@ -34,6 +34,9 @@ Additionally, I have created my own Eagle library based on the ones presented ab
 * Resistors
 * AK300 connectors
 
+## PCB fabrication
+I have included all the gerber files required by [JLC PCB](www.jlcpcb.com) to fabricate the actual PCB in the PCB folder, under the name `smart-plug.zip`.
+
 ## Next steps
 * Add current sensor.
 * Use SMD components and make PCB smaller.
