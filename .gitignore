@@ -68,7 +68,7 @@ typings/
 *.s#*
 
 # Private data in MCU
-mcu_mqtt/private-data.h
+mcu_mqtt/private_data.h
 
 # Compressed files
 *.zip
