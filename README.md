@@ -1,12 +1,13 @@
 # Smartplug
 ## Description
-Turn your lights on/off via WiFi! In this project we will make a smartplug using the ESP8266 microcontroller and communicate with it using MQTT.
+
+ESP8266 project to control plugs over WiFi.
 
 The project is divided in two parts:
 1. Programming the microcontroller (MCU).
 2. Designing a PCB for the smartplug.
 
-The current version of the prototype is about 6mm x 8mm, it has a fuse socket, and allows you to control the smartplug either via WiFi or manually (i.e. a normal light switch).
+The current version of the prototype is about 65mm x 65mm, and allows you to control the smartplug either via WiFi or manually (i.e. a normal light switch).
 
 I decided to use MQTT protocol mainly because of its simplicity and because it's very lightweight. 
 
@@ -22,6 +23,7 @@ To compile the codes, or open the Eagle schematic, you'll need to download the f
 3. [Adafruit Eagle library](https://github.com/adafruit/Adafruit-Eagle-Library) by Adafruit
 4. [esp8266modules](https://github.com/wvanvlaenderen/ESP8266-Eagle_Library) (Eagle library) by Wouter Van Vlaenderen
 5. [HLK-PM01](https://github.com/AhmedSaid/EAGLELibraries) (Eagle library) by Ahmed Said
+6. [ACS712](https://github.com/triffid/ESC/) (Eagle library) by Michael Moon
 
 Additionally, I have created my own Eagle library based on the ones presented above. This library (available [here](./PCB/smartplug-components.lbr)) contains all the components used in this project, so you don't have to install the other Eagle libraries. I have also enlarged the pads of every component, for those of you who that can't solder well (including me).
 
@@ -33,13 +35,15 @@ Additionally, I have created my own Eagle library based on the ones presented ab
 * Rectifier diode
 * Resistors
 * AK300 connectors
+* ACS712 current sensor
 
 ## PCB fabrication
-I have included all the gerber files required by [JLC PCB](www.jlcpcb.com) to fabricate the actual PCB in the PCB folder, under the name `smart-plug.zip`.
+I have included all the gerber files required by [JLC PCB](www.jlcpcb.com) to fabricate the actual PCB in the PCB folder, under the name `smart-plug.zip`. When required, just upload the zip file.
+
+> **Update**: added the new, smaller version with SMD components and current sensor under the name `smart-plug-v2.zip`
 
 ## Next steps
-* Add current sensor.
-* Use SMD components and make PCB smaller.
-* Add API to improve communication.
-* Add local broker using a Raspberry Pi.
-* Add 3D model for a box.
+- [x] Add current sensor.
+- [x] Use SMD components.
+- [ ] Add API to improve communication.
+- [ ] Add local broker using a Raspberry Pi.
