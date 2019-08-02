@@ -9,8 +9,8 @@
  * use them anyway.
  */
 
-#ifndef ESP8266_HEADER
-#define ESP8266_HEADER "esp8266_header.h"
+#ifndef ESP8266_HEADER_H
+#define ESP8266_HEADER_H
 
 #include <Arduino.h>
 
@@ -42,6 +42,6 @@ void measure_amps(void);
 void calculate_amps_rms(void);
 void on_measurement_ready(void);
 
-void toggle_plug(bool new_state);
+void toggle_plug(bool next_state);
 
-#endif
+#endif // ESP8266_HEADER_H
