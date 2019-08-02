@@ -6,8 +6,8 @@
  * REMEMBER TO RENAME THIS FILE TO private_data.h
  */
 
-#ifndef PRIVATE_DATA
-#define PRIVATE_DATA "private_data.h"
+#ifndef PRIVATE_DATA_H
+#define PRIVATE_DATA_H
 
 const char *ssid = "WIFI SSID";
 const char *password = "WIFI PASSWORD";
@@ -26,4 +26,4 @@ const char *topic_amps = "MQTT TOPIC FOR AMPS";
  * Unless you wish to control more than one plug at
  * the same time, i.e.: home/all-lights
  */
-#endif
+#endif // PRIVATE_DATA_H
