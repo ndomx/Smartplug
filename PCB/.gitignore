@@ -1,0 +1,22 @@
+CAMOutputs/
+__Previews/
+**/Imported **/**
+
+# Directories
+**/.svn
+**/History/
+**/Project Outputs for*/
+**/Project Logs for*/
+
+# Eagle files
+*.b#*
+*.s#*
+*.gbr
+
+# Altium files
+*.IntLib
+*.SchLib
+*.PcbLib
+*.PcbDoc
+*.SchDoc
+*.PcbPrj

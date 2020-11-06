@@ -68,9 +68,10 @@ typings/
 *.s#*
 *.gbr
 
-# Private data in MCU
-mcu_mqtt/private_data.h
-
 # Compressed files
 *.zip
 *.rar
+*.tar*
+
+# Docs folder for internal use
+esp8266/
