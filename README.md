@@ -23,3 +23,6 @@ The smartplug has two modes of operation:
 2. Use the smartplug as a traditional commutator circuit, i.e. the load will toggle every time each control signal is toggled, wether its via MQTT or physical input
 
 > I noticed only one relay is necessary to achieve the same behaviour. So V3 will drop one relay and handle all the logic by software.
+
+The mode of operation is controlled by the header J4.
+![](./Media/Pictures/opmode.jpg)
