@@ -1,2 +1,2 @@
 # Private data in MCU
-mcu_mqtt/private_data.h
+private_data.h

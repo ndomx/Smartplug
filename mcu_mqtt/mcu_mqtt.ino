@@ -33,16 +33,17 @@ bool is_resting;
 
 void setup()
 {
-    pinMode(RELAY_PIN, OUTPUT);
+    pinMode(SWOUT, OUTPUT);
+    pinMode(SWIN, INPUT);
+    pinMode(OC, OUTPUT);
+    pinMode(LED_WIFI, OUTPUT);
+    pinMode(ADC_PIN, INPUT);
 
-    pinMode(LED_RED, OUTPUT);
-    pinMode(LED_BLUE, OUTPUT);
+    // Ensure the OC flag starts deactivated
+    digitalWrite(OC, HIGH);
 
     Serial.begin(115200);
     setup_wifi();
-
-    digitalWrite(RELAY_PIN, LOW);
-
     setup_mqtt();
 
     rms_calculation.attach_ms(TICKER_INTERVAL_MS, measure_amps);
@@ -84,7 +85,7 @@ void setup_wifi()
         delay(500);
         Serial.print(".");
 
-        digitalWrite(LED_BLUE, led_state);
+        digitalWrite(LED_WIFI, led_state);
         led_state ^= HIGH;
     }
 
@@ -93,7 +94,7 @@ void setup_wifi()
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
 
-    digitalWrite(LED_BLUE, HIGH);
+    digitalWrite(LED_WIFI, LOW);
 }
 
 void setup_mqtt()
@@ -106,7 +107,7 @@ void setup_mqtt()
 
 void on_message(char *topic, byte *payload, unsigned int length)
 {
-    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_WIFI, HIGH);
 
     Serial.print(topic);
     Serial.print(" | ");
@@ -118,12 +119,12 @@ void on_message(char *topic, byte *payload, unsigned int length)
     
     toggle_plug(payload[0] == '1');
 
-    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_WIFI, LOW);
 }
 
 void reconnect()
 {
-    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_WIFI, HIGH);
     while (!client.connected())
     {
         Serial.print("Attempting MQTT connection...");
@@ -141,13 +142,10 @@ void reconnect()
             delay(5000);
         }
     }
-    digitalWrite(LED_RED, LOW);
 }
 
 void publish(void)
 {
-    digitalWrite(LED_RED, HIGH);
-
     Serial.print("Publish: [");
     Serial.print(topic_amps);
     Serial.print("] amps_rms = ");
@@ -155,12 +153,13 @@ void publish(void)
     
     snprintf(pub_msg, PUB_MSG_LENGTH, "amps_rms: %f", amps_rms);
     client.publish(topic_amps, pub_msg);
-
-    digitalWrite(LED_RED, LOW);
 }
 
 void measure_amps()
 {
+    // The current sample has an offset of Vdd/2,
+    // so its necessary to substract 1024/2 from the
+    // sampled value
     float amps = (analogRead(ADC_PIN) - 512) * MAX_AMPS / 512;
 
     amps_array[amps_index++] = amps * amps;
@@ -194,14 +193,27 @@ void calculate_amps_rms()
     /*
      * Technically, amps_rms would be equal to the sqrt of
      * the actual quantity, but its best not to calculate
-     * sqrts in the mcu, but calculate it on the server side
+     * sqrts in the mcu, but to calculate them server side
      */
+
+    if (amps_rms > OVERCURRENT_TH * OVERCURRENT_TH)
+    {
+        // Theres no software way of clearing the OC flag
+        // To turn it off, the MCU must be resetted
+        digitalWrite(OC, LOW);
+    }
 }
 
 void toggle_plug(bool next_state)
 {
-    if (is_connected(amps_rms) != next_state)
+    bool opmode = digitalRead(OPMODE);
+    if (opmode)
     {
-        digitalWrite(RELAY_PIN, next_state);
+        bool swin = digitalRead(SWIN);
+        digitalWrite(SWOUT, swin);
+    }
+    else
+    {
+        digitalWrite(SWOUT, next_state);
     }
 }

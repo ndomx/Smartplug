@@ -14,9 +14,11 @@
 
 #include <Arduino.h>
 
-#define RELAY_PIN D1
-#define LED_RED D7 // For MQTT debugging
-#define LED_BLUE D8 // For WiFi debugging
+#define SWOUT D6
+#define SWIN D0
+#define OPMODE D3
+#define OC D1
+#define LED_WIFI D8
 #define ADC_PIN A0
 
 #define PUB_MSG_LENGTH 20
@@ -26,10 +28,8 @@
 
 #define TICKER_REST_MS 1000
 
-#define MIN_AMPS 0.01 // Threshold for off state
-#define MAX_AMPS 5.0 // Max current supported by sensor
-
-#define is_connected(x) x > MIN_AMPS
+#define MAX_AMPS 30.0 // Max current supported by sensor
+#define OVERCURRENT_TH 5 // OC threshold
 
 void setup_wifi(void);
 
