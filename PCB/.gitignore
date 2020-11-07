@@ -13,10 +13,5 @@ __Previews/
 *.s#*
 *.gbr
 
-# Altium files
-*.IntLib
-*.SchLib
-*.PcbLib
-*.PcbDoc
-*.SchDoc
-*.PcbPrj
+# 3d models
+3D/**
